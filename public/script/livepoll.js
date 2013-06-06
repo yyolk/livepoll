@@ -1,3 +1,5 @@
+var ppercentage = 0;
+
 var packAmount = 1000;
     function packPosition(x) {return Math.floor(x * packAmount);}
     function unpackPosition(x) {return x / packAmount;}
@@ -81,8 +83,16 @@ var packAmount = 1000;
           $("#" + id).offset({left: x * w, top: y * h});
         }
       }
+      
       avg /= count;
+
       var percentage = Math.floor(map((count == 0 ? .5 : avg), .2, .8, 100, 0));
       $("#percentage").text(percentage + "%");
+      if (ppercentage > percentage){
+        $("#plus").animate({opacity:1},100, function(){ $(this).animate({opacity:'0.5'},100); });
+      } else if (percentage > ppercentage){
+        $("#minus").animate({opacity:1},100, function(){ $(this).animate({opacity:'0.5'},100); });
+      }
+      ppercentage = percentage;
     }
     setInterval(function() {updateCursors()}, 33);
